@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import ImageWorkspace from './components/ImageWorkspace';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
+import SandAnimation from './components/SandAnimation';
 import { editImageWithAI } from './services/imageEditService';
 import { STYLE_OPTIONS } from './constants';
 
@@ -108,36 +109,39 @@ const App: React.FC = () => {
   const isEnhanceDisabled = !originalImageFile || isLoading || (selectedStyle === 'custom' && !customPrompt.trim());
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-800 text-white font-sans">
-      <Navbar />
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar
-          selectedStyle={selectedStyle}
-          onStyleChange={handleStyleChange}
-          onEnhance={handleEnhance}
-          onReset={handleReset}
-          onDownload={handleDownload}
-          isImageUploaded={!!originalImageFile}
-          isLoading={isLoading}
-          customPrompt={customPrompt}
-          onCustomPromptChange={handleCustomPromptChange}
-          isEnhanceDisabled={isEnhanceDisabled}
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-        />
-        <main className="flex-1 p-4 md:p-6 bg-gray-900 overflow-auto">
-          <ImageWorkspace
-            onImageUpload={handleImageUpload}
-            imageUrl={editedImageUrl}
+    <div className="flex flex-col min-h-screen bg-background text-foreground font-sans relative overflow-hidden">
+      <SandAnimation />
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Navbar />
+        <div className="flex flex-1 overflow-hidden">
+          <Sidebar
+            selectedStyle={selectedStyle}
+            onStyleChange={handleStyleChange}
+            onEnhance={handleEnhance}
+            onReset={handleReset}
+            onDownload={handleDownload}
+            isImageUploaded={!!originalImageFile}
             isLoading={isLoading}
-            error={error}
-            statusText={statusText}
-            isImageLoaded={!!originalImageUrl}
-            onOpenSidebar={() => setIsSidebarOpen(true)}
+            customPrompt={customPrompt}
+            onCustomPromptChange={handleCustomPromptChange}
+            isEnhanceDisabled={isEnhanceDisabled}
+            isOpen={isSidebarOpen}
+            onClose={() => setIsSidebarOpen(false)}
           />
-        </main>
+          <main className="flex-1 p-4 md:p-6 bg-background/50 overflow-auto">
+            <ImageWorkspace
+              onImageUpload={handleImageUpload}
+              imageUrl={editedImageUrl}
+              isLoading={isLoading}
+              error={error}
+              statusText={statusText}
+              isImageLoaded={!!originalImageUrl}
+              onOpenSidebar={() => setIsSidebarOpen(true)}
+            />
+          </main>
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </div>
   );
 };

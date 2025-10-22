@@ -14,7 +14,7 @@ interface HomePageProps {
 
 const HomePage: React.FC<HomePageProps> = ({ onEnterEditor }) => {
   return (
-    <div className="flex flex-col min-h-screen bg-black text-white font-sans">
+    <div className="flex flex-col min-h-screen bg-black text-white font-sans pt-16">
       <Navbar onNavigate={(section) => section === 'editor' && onEnterEditor()} />
       <main className="flex-grow">
         <HeroSection onGetStarted={onEnterEditor} />

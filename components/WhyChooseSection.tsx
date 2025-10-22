@@ -43,9 +43,9 @@ const WhyChooseSection: React.FC = () => {
   return (
     <section className="bg-black py-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">Why Choose SparkFrameAI Studio?</h2>
-          <p className="text-gray-400 text-lg">
+        <div className="text-center mb-16 animate-fade-in">
+          <h2 className="text-5xl font-bold text-white mb-4 font-['Playfair_Display']">Why Choose SparkFrameAI Studio?</h2>
+          <p className="text-gray-400 text-lg font-['Poppins']">
             Professional results with cutting-edge technology
           </p>
         </div>
@@ -56,11 +56,11 @@ const WhyChooseSection: React.FC = () => {
             return (
               <div 
                 key={feature.title}
-                className="bg-gray-900/50 border border-gray-800 rounded-lg p-8 hover:border-[#ea580c] transition-all"
+                className="bg-gradient-to-br from-gray-900 to-black border border-gray-800 rounded-2xl p-8 hover:border-[#ea580c] transition-all duration-300 transform hover:scale-105 hover:-translate-y-2 hover:shadow-2xl hover:shadow-[#ea580c]/20 group"
               >
-                <IconComponent className="h-12 w-12 text-[#ea580c] mb-6" />
-                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-                <p className="text-gray-400">{feature.description}</p>
+                <IconComponent className="h-12 w-12 text-[#ea580c] mb-6 group-hover:scale-110 group-hover:rotate-6 transition-transform duration-300" />
+                <h3 className="text-xl font-bold text-white mb-3 font-['Poppins']">{feature.title}</h3>
+                <p className="text-gray-400 font-['Poppins']">{feature.description}</p>
               </div>
             );
           })}

@@ -43,22 +43,22 @@ const SampleGallery: React.FC = () => {
   return (
     <section id="gallery" className="bg-black border-t border-gray-800">
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
-        <div className="text-center">
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+        <div className="text-center animate-fade-in">
+          <h2 className="text-5xl font-extrabold text-white mb-4 font-['Playfair_Display']">
             Inspiration Gallery
           </h2>
-          <p className="mt-4 text-lg text-gray-300">
+          <p className="mt-4 text-lg text-gray-300 font-['Poppins']">
             See what our AI can do. Get inspired for your next creation.
           </p>
         </div>
         <div className="mt-12 grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {galleryItems.map((item) => (
-            <div key={item.id} className="group relative bg-gray-900 rounded-lg overflow-hidden shadow-xl transform hover:scale-105 transition-transform duration-300">
-              <img className="h-72 w-full object-cover" src={item.imageUrl} alt={item.title} />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              <div className="absolute bottom-0 p-6">
-                <h3 className="text-xl font-semibold text-white">{item.title}</h3>
-                <p className="mt-2 text-sm text-gray-300">{item.description}</p>
+            <div key={item.id} className="group relative bg-gradient-to-br from-gray-900 to-black rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-all duration-300 hover:-translate-y-2 hover:shadow-[#ea580c]/20">
+              <img className="h-72 w-full object-cover group-hover:scale-110 transition-transform duration-500" src={item.imageUrl} alt={item.title} />
+              <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-80 group-hover:opacity-90 transition-opacity" />
+              <div className="absolute bottom-0 p-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                <h3 className="text-xl font-semibold text-white font-['Poppins']">{item.title}</h3>
+                <p className="mt-2 text-sm text-gray-300 font-['Poppins'] opacity-0 group-hover:opacity-100 transition-opacity duration-300">{item.description}</p>
               </div>
             </div>
           ))}

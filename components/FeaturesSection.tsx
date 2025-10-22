@@ -23,10 +23,10 @@ const features = [
 
 const FeaturesSection: React.FC = () => {
   return (
-    <div className="py-16 sm:py-24 bg-gray-800">
+    <div className="py-16 sm:py-24 bg-black border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:text-center">
-          <h2 className="text-base text-orange-400 font-semibold tracking-wide uppercase">Features</h2>
+          <h2 className="text-base text-[#ea580c] font-semibold tracking-wide uppercase">Features</h2>
           <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl">
             Everything You Need to Create Stunning Images
           </p>
@@ -42,7 +42,7 @@ const FeaturesSection: React.FC = () => {
               return (
                 <div key={feature.name} className="relative">
                   <dt>
-                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-[#ea580c] text-white">
                       <IconComponent className="h-6 w-6" aria-hidden="true" />
                     </div>
                     <p className="ml-16 text-lg leading-6 font-medium text-white">{feature.name}</p>

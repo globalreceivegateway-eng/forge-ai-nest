@@ -41,7 +41,7 @@ const galleryItems = [
 
 const SampleGallery: React.FC = () => {
   return (
-    <div className="bg-gray-800/50 flex-grow">
+    <section id="gallery" className="bg-black border-t border-gray-800">
       <div className="max-w-7xl mx-auto py-16 px-4 sm:px-6 lg:py-24 lg:px-8">
         <div className="text-center">
           <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
@@ -64,7 +64,7 @@ const SampleGallery: React.FC = () => {
           ))}
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 

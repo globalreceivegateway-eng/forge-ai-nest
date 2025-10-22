@@ -14,4 +14,5 @@ export const STYLE_OPTIONS = [
   { id: 'magazine-cover', name: 'Magazine Cover' },
   { id: 'studio-lighting', name: 'Studio Lighting' },
   { id: 'beauty-retouch', name: 'Beauty Retouch' },
+  { id: 'custom', name: 'Custom Styling' },
 ];

@@ -51,19 +51,19 @@ const SidebarContent: React.FC<Omit<SidebarProps, 'isOpen' | 'onClose'>> = ({
         ))}
       </div>
 
-      <div className="mt-8">
-        <h3 className="text-lg font-semibold text-white mb-3">Custom Styling</h3>
-        <textarea
-          value={customPrompt}
-          onChange={(e) => onCustomPromptChange(e.target.value)}
-          placeholder="e.g., Make the background black and white..."
-          rows={3}
-          className={`w-full p-3 rounded-lg bg-gray-700 text-gray-200 text-sm placeholder-gray-400 focus:outline-none transition-all duration-200 ring-offset-2 ring-offset-gray-800 focus:ring-2 focus:ring-orange-500 ${
-            selectedStyle === 'custom' ? 'ring-2 ring-orange-500' : 'border border-transparent'
-          }`}
-          aria-label="Custom styling prompt"
-        />
-      </div>
+      {selectedStyle === 'custom' && (
+        <div className="mt-8">
+          <h3 className="text-lg font-semibold text-white mb-3">Custom Styling</h3>
+          <textarea
+            value={customPrompt}
+            onChange={(e) => onCustomPromptChange(e.target.value)}
+            placeholder="e.g., Make the background black and white..."
+            rows={4}
+            className="w-full p-3 rounded-lg bg-gray-700 text-gray-200 text-sm placeholder-gray-400 focus:outline-none transition-all duration-200 ring-2 ring-orange-500 border-none"
+            aria-label="Custom styling prompt"
+          />
+        </div>
+      )}
     </div>
 
     <div className="flex-grow"></div>

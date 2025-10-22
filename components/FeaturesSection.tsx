@@ -37,17 +37,20 @@ const FeaturesSection: React.FC = () => {
 
         <div className="mt-20">
           <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
-            {features.map((feature) => (
-              <div key={feature.name} className="relative">
-                <dt>
-                  <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
-                    <feature.icon className="h-6 w-6" aria-hidden="true" />
-                  </div>
-                  <p className="ml-16 text-lg leading-6 font-medium text-white">{feature.name}</p>
-                </dt>
-                <dd className="mt-2 ml-16 text-base text-gray-400">{feature.description}</dd>
-              </div>
-            ))}
+            {features.map((feature) => {
+              const IconComponent = feature.icon;
+              return (
+                <div key={feature.name} className="relative">
+                  <dt>
+                    <div className="absolute flex items-center justify-center h-12 w-12 rounded-md bg-orange-500 text-white">
+                      <IconComponent className="h-6 w-6" aria-hidden="true" />
+                    </div>
+                    <p className="ml-16 text-lg leading-6 font-medium text-white">{feature.name}</p>
+                  </dt>
+                  <dd className="mt-2 ml-16 text-base text-gray-400">{feature.description}</dd>
+                </div>
+              );
+            })}
           </dl>
         </div>
       </div>

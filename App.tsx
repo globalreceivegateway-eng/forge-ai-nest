@@ -4,7 +4,7 @@ import Sidebar from './components/Sidebar';
 import ImageWorkspace from './components/ImageWorkspace';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
-import { generateEditedImage } from './services/geminiService';
+import { editImageWithAI } from './services/imageEditService';
 import { STYLE_OPTIONS } from './constants';
 
 const App: React.FC = () => {
@@ -43,27 +43,33 @@ const App: React.FC = () => {
   };
 
   const handleEnhance = async () => {
-    if (!originalImageFile) {
-      setError('Please upload an image first.');
-      return;
-    }
-    if (selectedStyle === 'custom' && !customPrompt.trim()) {
-      setError('Please enter a custom style description.');
-      return;
-    }
+    if (!originalImageFile || !editedImageUrl) return;
+
     setIsLoading(true);
     setError(null);
-    setStatusText('Enhancing your masterpiece... This can take a moment.');
-    if (isSidebarOpen) setIsSidebarOpen(false); // Close mobile sidebar on enhance
+    setStatusText('Enhancing your image...');
 
     try {
-      const base64Data = await generateEditedImage(originalImageFile, selectedStyle, customPrompt);
-      setEditedImageUrl(`data:image/png;base64,${base64Data}`);
-      setStatusText('Image successfully enhanced! You can try another style or download your image.');
+      const editedBase64 = await editImageWithAI(
+        editedImageUrl,
+        selectedStyle,
+        customPrompt
+      );
+
+      setEditedImageUrl(editedBase64);
+      setStatusText('Enhancement complete! Download or edit again.');
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'An unknown error occurred.';
+      console.error('Enhancement error:', err);
+      const errorMessage = err instanceof Error ? err.message : 'An error occurred while enhancing the image.';
       setError(errorMessage);
-      setStatusText('An error occurred. Please try again.');
+      setStatusText('Enhancement failed. Please try again.');
+      
+      // Show user-friendly error for rate limits
+      if (errorMessage.includes('Rate limit') || errorMessage.includes('429')) {
+        setError('Rate limit exceeded. Please wait a moment and try again.');
+      } else if (errorMessage.includes('Payment') || errorMessage.includes('402')) {
+        setError('AI credits exhausted. Please add credits in Settings > Workspace > Usage.');
+      }
     } finally {
       setIsLoading(false);
     }

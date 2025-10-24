@@ -1,5 +1,10 @@
 import React from 'react';
 import { Star } from 'lucide-react';
+import person1 from '@/assets/testimonials/person1.webp';
+import person2 from '@/assets/testimonials/person2.webp';
+import person3 from '@/assets/testimonials/person3.webp';
+import person4 from '@/assets/testimonials/person4.webp';
+import person5 from '@/assets/testimonials/person5.webp';
 
 interface Testimonial {
   name: string;
@@ -13,44 +18,37 @@ const testimonials: Testimonial[] = [
   {
     name: "Sarah Johnson",
     role: "Professional Photographer",
-    image: "👩‍💼",
+    image: person1,
     rating: 5,
     text: "SparkFrameAI has completely transformed my workflow. What used to take hours in Photoshop now takes minutes. The AI understands exactly what I need!"
   },
   {
     name: "Michael Chen",
     role: "E-commerce Manager",
-    image: "👨‍💼",
+    image: person2,
     rating: 5,
     text: "We process hundreds of product photos daily. This tool increased our productivity by 300%. The quality is consistently excellent and our customers love the results."
   },
   {
     name: "Emily Rodriguez",
     role: "Social Media Influencer",
-    image: "👩‍🎨",
+    image: person3,
     rating: 5,
     text: "As a content creator, I need my posts to stand out. SparkFrameAI gives me professional-quality edits instantly. My engagement has never been better!"
   },
   {
     name: "David Park",
     role: "Marketing Director",
-    image: "👨‍💻",
+    image: person4,
     rating: 5,
     text: "The ROI on this tool is incredible. We've cut our photo editing costs by 70% while improving quality. It's a game-changer for our marketing campaigns."
   },
   {
     name: "Jessica Williams",
     role: "Wedding Photographer",
-    image: "👰",
+    image: person5,
     rating: 5,
     text: "My clients are amazed by the quick turnaround and stunning results. SparkFrameAI helps me deliver magical memories faster than ever before."
-  },
-  {
-    name: "Alex Thompson",
-    role: "Graphic Designer",
-    image: "👨‍🎨",
-    rating: 5,
-    text: "The creative possibilities are endless. I use it for everything from quick touch-ups to complete artistic transformations. It's like having a AI assistant that never sleeps!"
   }
 ];
 
@@ -89,9 +87,11 @@ const TestimonialsSection: React.FC = () => {
 
               {/* Author Info */}
               <div className="flex items-center gap-3 pt-4 border-t border-gray-800">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 flex items-center justify-center text-2xl">
-                  {testimonial.image}
-                </div>
+                <img 
+                  src={testimonial.image} 
+                  alt={testimonial.name}
+                  className="w-12 h-12 rounded-full object-cover"
+                />
                 <div>
                   <h4 className="text-white font-semibold">{testimonial.name}</h4>
                   <p className="text-gray-400 text-sm">{testimonial.role}</p>

@@ -1,41 +1,47 @@
 import React from 'react';
+import professionalPortrait from '@/assets/gallery/professional-portrait.png';
+import cinematicPhoto from '@/assets/gallery/cinematic-photo.png';
+import artisticStyle from '@/assets/gallery/artistic-style.png';
+import magazineCover from '@/assets/gallery/magazine-cover.png';
+import studioLighting from '@/assets/gallery/studio-lighting.png';
+import beautyRetouch from '@/assets/gallery/beauty-retouch.png';
 
 const galleryItems = [
   {
     id: 1,
     title: 'Professional Portrait',
     description: 'Crisp, clean, and perfectly lit for a stunning professional headshot.',
-    imageUrl: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: professionalPortrait,
   },
   {
     id: 2,
     title: 'Cinematic Photo',
     description: 'Dramatic lighting and color grading for a frame-worthy movie still look.',
-    imageUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: cinematicPhoto,
   },
   {
     id: 3,
     title: 'Artistic Style',
     description: 'A creative transformation with painterly effects and vibrant colors.',
-    imageUrl: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=1976&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: artisticStyle,
   },
   {
     id: 4,
     title: 'Magazine Cover',
     description: 'Bold, polished, and ready for the front page with high-fashion editing.',
-    imageUrl: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: magazineCover,
   },
   {
     id: 5,
     title: 'Studio Lighting',
     description: 'Expertly relit to create depth, dimension, and a professional feel.',
-    imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: studioLighting,
   },
   {
     id: 6,
     title: 'Beauty Retouch',
     description: 'Flawless skin and enhanced features for a high-end commercial look.',
-    imageUrl: 'https://images.unsplash.com/photo-1604681630513-69474a4e253f?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    imageUrl: beautyRetouch,
   },
 ];
 

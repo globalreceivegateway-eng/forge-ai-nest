@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import beforeImage from '@/assets/before-artistic.png';
-import afterImage from '@/assets/after-artistic.png';
 
 interface BeforeAfterImage {
   before: string;
@@ -12,8 +10,8 @@ interface BeforeAfterImage {
 
 const examples: BeforeAfterImage[] = [
   {
-    before: beforeImage,
-    after: afterImage,
+    before: '/images/before-artistic.png',
+    after: '/images/after-artistic.png',
     title: "Artistic Transform",
     style: "Applied artistic style"
   }

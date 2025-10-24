@@ -1,47 +1,41 @@
 import React from 'react';
-import professionalPortrait from '@/assets/gallery/professional-portrait.png';
-import cinematicPhoto from '@/assets/gallery/cinematic-photo.png';
-import artisticStyle from '@/assets/gallery/artistic-style.png';
-import magazineCover from '@/assets/gallery/magazine-cover.png';
-import studioLighting from '@/assets/gallery/studio-lighting.png';
-import beautyRetouch from '@/assets/gallery/beauty-retouch.png';
 
 const galleryItems = [
   {
     id: 1,
     title: 'Professional Portrait',
     description: 'Crisp, clean, and perfectly lit for a stunning professional headshot.',
-    imageUrl: professionalPortrait,
+    imageUrl: '/images/professional-portrait.png',
   },
   {
     id: 2,
     title: 'Cinematic Photo',
     description: 'Dramatic lighting and color grading for a frame-worthy movie still look.',
-    imageUrl: cinematicPhoto,
+    imageUrl: '/images/cinematic-photo.png',
   },
   {
     id: 3,
     title: 'Artistic Style',
     description: 'A creative transformation with painterly effects and vibrant colors.',
-    imageUrl: artisticStyle,
+    imageUrl: '/images/artistic-style.png',
   },
   {
     id: 4,
     title: 'Magazine Cover',
     description: 'Bold, polished, and ready for the front page with high-fashion editing.',
-    imageUrl: magazineCover,
+    imageUrl: '/images/magazine-cover.png',
   },
   {
     id: 5,
     title: 'Studio Lighting',
     description: 'Expertly relit to create depth, dimension, and a professional feel.',
-    imageUrl: studioLighting,
+    imageUrl: '/images/studio-lighting.png',
   },
   {
     id: 6,
     title: 'Beauty Retouch',
     description: 'Flawless skin and enhanced features for a high-end commercial look.',
-    imageUrl: beautyRetouch,
+    imageUrl: '/images/beauty-retouch.png',
   },
 ];
 

@@ -1,10 +1,5 @@
 import React from 'react';
 import { Star } from 'lucide-react';
-import person1 from '@/assets/testimonials/person1.webp';
-import person2 from '@/assets/testimonials/person2.webp';
-import person3 from '@/assets/testimonials/person3.webp';
-import person4 from '@/assets/testimonials/person4.webp';
-import person5 from '@/assets/testimonials/person5.webp';
 
 interface Testimonial {
   name: string;
@@ -18,35 +13,35 @@ const testimonials: Testimonial[] = [
   {
     name: "Sarah Johnson",
     role: "Professional Photographer",
-    image: person1,
+    image: '/images/person1.webp',
     rating: 5,
     text: "SparkFrameAI has completely transformed my workflow. What used to take hours in Photoshop now takes minutes. The AI understands exactly what I need!"
   },
   {
     name: "Michael Chen",
     role: "E-commerce Manager",
-    image: person2,
+    image: '/images/person2.webp',
     rating: 5,
     text: "We process hundreds of product photos daily. This tool increased our productivity by 300%. The quality is consistently excellent and our customers love the results."
   },
   {
     name: "Emily Rodriguez",
     role: "Social Media Influencer",
-    image: person3,
+    image: '/images/person3.webp',
     rating: 5,
     text: "As a content creator, I need my posts to stand out. SparkFrameAI gives me professional-quality edits instantly. My engagement has never been better!"
   },
   {
     name: "David Park",
     role: "Marketing Director",
-    image: person4,
+    image: '/images/person4.webp',
     rating: 5,
     text: "The ROI on this tool is incredible. We've cut our photo editing costs by 70% while improving quality. It's a game-changer for our marketing campaigns."
   },
   {
     name: "Jessica Williams",
     role: "Wedding Photographer",
-    image: person5,
+    image: '/images/person5.webp',
     rating: 5,
     text: "My clients are amazed by the quick turnaround and stunning results. SparkFrameAI helps me deliver magical memories faster than ever before."
   }

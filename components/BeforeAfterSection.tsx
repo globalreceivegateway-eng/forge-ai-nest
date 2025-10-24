@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import beforeLandscape from '@/assets/before-landscape.jpg';
+import afterLandscape from '@/assets/after-landscape.jpg';
+import beforeArtistic from '@/assets/before-artistic.jpg';
+import afterArtistic from '@/assets/after-artistic.jpg';
+import beforePortrait from '@/assets/before-portrait.jpg';
+import afterPortrait from '@/assets/after-portrait.jpg';
 
 interface BeforeAfterImage {
   before: string;
@@ -10,20 +16,20 @@ interface BeforeAfterImage {
 
 const examples: BeforeAfterImage[] = [
   {
-    before: "🌆",
-    after: "🌃",
+    before: beforeLandscape,
+    after: afterLandscape,
     title: "Professional Enhancement",
     style: "Enhanced lighting and colors"
   },
   {
-    before: "📸",
-    after: "🎨",
+    before: beforeArtistic,
+    after: afterArtistic,
     title: "Artistic Transform",
     style: "Applied artistic style"
   },
   {
-    before: "👤",
-    after: "✨",
+    before: beforePortrait,
+    after: afterPortrait,
     title: "Portrait Perfection",
     style: "Beauty enhancement"
   }
@@ -66,7 +72,7 @@ const BeforeAfterSection: React.FC = () => {
   const currentExample = examples[currentIndex];
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-950">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -81,7 +87,7 @@ const BeforeAfterSection: React.FC = () => {
         {/* Before/After Comparison */}
         <div className="relative">
           <div 
-            className="relative w-full aspect-video bg-gray-900 rounded-2xl overflow-hidden cursor-ew-resize border border-gray-800"
+            className="relative w-full aspect-video bg-slate-900 rounded-2xl overflow-hidden cursor-ew-resize border border-slate-800 shadow-2xl"
             onMouseMove={handleMouseMove}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
@@ -91,10 +97,14 @@ const BeforeAfterSection: React.FC = () => {
             onTouchEnd={() => setIsDragging(false)}
           >
             {/* Before Image */}
-            <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-gray-800 to-gray-900">
-              <div className="text-center">
-                <div className="text-8xl mb-4">{currentExample.before}</div>
-                <span className="inline-block bg-red-500/20 text-red-400 px-4 py-2 rounded-full text-sm font-semibold">
+            <div className="absolute inset-0">
+              <img 
+                src={currentExample.before} 
+                alt="Before transformation" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-6 left-6">
+                <span className="inline-block bg-red-500/90 text-white px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm">
                   BEFORE
                 </span>
               </div>
@@ -102,12 +112,16 @@ const BeforeAfterSection: React.FC = () => {
 
             {/* After Image (clipped) */}
             <div 
-              className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-purple-900 to-pink-900"
+              className="absolute inset-0"
               style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
             >
-              <div className="text-center">
-                <div className="text-8xl mb-4">{currentExample.after}</div>
-                <span className="inline-block bg-green-500/20 text-green-400 px-4 py-2 rounded-full text-sm font-semibold">
+              <img 
+                src={currentExample.after} 
+                alt="After transformation" 
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute bottom-6 left-6">
+                <span className="inline-block bg-green-500/90 text-white px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm">
                   AFTER
                 </span>
               </div>

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import beforeLandscape from '@/assets/before-landscape.jpg';
-import afterLandscape from '@/assets/after-landscape.jpg';
-import beforeArtistic from '@/assets/before-artistic.jpg';
-import afterArtistic from '@/assets/after-artistic.jpg';
 import beforePortrait from '@/assets/before-portrait.jpg';
 import afterPortrait from '@/assets/after-portrait.jpg';
+import beforeLandscape from '@/assets/before-landscape.jpg';
+import afterLandscape from '@/assets/after-landscape.jpg';
+import beforeProduct from '@/assets/before-product.jpg';
+import afterProduct from '@/assets/after-product.jpg';
 
 interface BeforeAfterImage {
   before: string;
@@ -16,22 +16,22 @@ interface BeforeAfterImage {
 
 const examples: BeforeAfterImage[] = [
   {
-    before: beforeLandscape,
-    after: afterLandscape,
-    title: "Professional Enhancement",
-    style: "Enhanced lighting and colors"
-  },
-  {
-    before: beforeArtistic,
-    after: afterArtistic,
-    title: "Artistic Transform",
-    style: "Applied artistic style"
-  },
-  {
     before: beforePortrait,
     after: afterPortrait,
-    title: "Portrait Perfection",
-    style: "Beauty enhancement"
+    title: "Portrait Enhancement",
+    style: "Professional beauty retouching and lighting"
+  },
+  {
+    before: beforeLandscape,
+    after: afterLandscape,
+    title: "Landscape Transform",
+    style: "Dramatic sky and color enhancement"
+  },
+  {
+    before: beforeProduct,
+    after: afterProduct,
+    title: "Product Photography",
+    style: "Studio-quality lighting and polish"
   }
 ];
 
@@ -72,7 +72,7 @@ const BeforeAfterSection: React.FC = () => {
   const currentExample = examples[currentIndex];
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-950">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-900 via-[#1a2332] to-black">
       <div className="max-w-6xl mx-auto">
         {/* Section Header */}
         <div className="text-center mb-16">
@@ -87,7 +87,7 @@ const BeforeAfterSection: React.FC = () => {
         {/* Before/After Comparison */}
         <div className="relative">
           <div 
-            className="relative w-full aspect-video bg-slate-900 rounded-2xl overflow-hidden cursor-ew-resize border border-slate-800 shadow-2xl"
+            className="relative w-full aspect-video bg-[#1e293b] rounded-2xl overflow-hidden cursor-ew-resize border border-gray-700 shadow-2xl"
             onMouseMove={handleMouseMove}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseUp}
@@ -100,11 +100,11 @@ const BeforeAfterSection: React.FC = () => {
             <div className="absolute inset-0">
               <img 
                 src={currentExample.before} 
-                alt="Before transformation" 
+                alt="Before" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute bottom-6 left-6">
-                <span className="inline-block bg-red-500/90 text-white px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm">
+              <div className="absolute top-4 left-4">
+                <span className="inline-block bg-red-500/90 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
                   BEFORE
                 </span>
               </div>
@@ -117,11 +117,11 @@ const BeforeAfterSection: React.FC = () => {
             >
               <img 
                 src={currentExample.after} 
-                alt="After transformation" 
+                alt="After" 
                 className="w-full h-full object-cover"
               />
-              <div className="absolute bottom-6 left-6">
-                <span className="inline-block bg-green-500/90 text-white px-4 py-2 rounded-full text-sm font-semibold backdrop-blur-sm">
+              <div className="absolute top-4 left-4">
+                <span className="inline-block bg-green-500/90 text-white px-4 py-2 rounded-full text-sm font-semibold shadow-lg">
                   AFTER
                 </span>
               </div>

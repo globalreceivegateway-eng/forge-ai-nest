@@ -101,10 +101,13 @@ const TestimonialsSection: React.FC = () => {
           <p className="text-gray-400 mb-4">Join our growing community of satisfied users</p>
           <div className="flex items-center justify-center gap-2">
             <div className="flex -space-x-2">
-              {['👨', '👩', '👨‍💼', '👩‍💻', '👨‍🎨'].map((emoji, i) => (
-                <div key={i} className="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500 to-pink-500 border-2 border-black flex items-center justify-center">
-                  {emoji}
-                </div>
+              {['/images/person1.webp', '/images/person2.webp', '/images/person3.webp', '/images/person4.webp', '/images/person5.webp'].map((img, i) => (
+                <img 
+                  key={i} 
+                  src={img}
+                  alt={`User ${i + 1}`}
+                  className="w-10 h-10 rounded-full border-2 border-black object-cover"
+                />
               ))}
             </div>
             <p className="text-white font-semibold">10,000+ Happy Users</p>

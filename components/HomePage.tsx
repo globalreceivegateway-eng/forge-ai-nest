@@ -4,6 +4,8 @@ import HeroSection from './HeroSection';
 import FeaturesSection from './FeaturesSection';
 import SampleGallery from './SampleGallery';
 import WhyChooseSection from './WhyChooseSection';
+import BeforeAfterSection from './BeforeAfterSection';
+import TestimonialsSection from './TestimonialsSection';
 import PricingSection from './PricingSection';
 import HowItWorksSection from './HowItWorksSection';
 import Footer from './Footer';
@@ -20,7 +22,9 @@ const HomePage: React.FC<HomePageProps> = ({ onEnterEditor }) => {
         <HeroSection onGetStarted={onEnterEditor} />
         <FeaturesSection />
         <SampleGallery />
+        <BeforeAfterSection />
         <WhyChooseSection />
+        <TestimonialsSection />
         <PricingSection onSelectPackage={onEnterEditor} />
         <HowItWorksSection />
       </main>

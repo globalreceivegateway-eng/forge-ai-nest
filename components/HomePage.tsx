@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './Navbar';
 import HeroSection from './HeroSection';
 import FeaturesSection from './FeaturesSection';
+import FeaturedArtworksSection from './FeaturedArtworksSection';
 import SampleGallery from './SampleGallery';
 import WhyChooseSection from './WhyChooseSection';
 import BeforeAfterSection from './BeforeAfterSection';
@@ -21,6 +22,7 @@ const HomePage: React.FC<HomePageProps> = ({ onEnterEditor }) => {
       <main className="flex-grow">
         <HeroSection onGetStarted={onEnterEditor} />
         <FeaturesSection />
+        <FeaturedArtworksSection />
         <SampleGallery />
         <BeforeAfterSection />
         <WhyChooseSection />

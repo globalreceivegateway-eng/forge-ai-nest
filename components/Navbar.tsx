@@ -69,12 +69,12 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
                 >
                   Sign In
                 </a>
-                <button 
-                  onClick={() => onNavigate?.('editor')}
+                <a
+                  href="/auth"
                   className="bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white px-6 py-2 rounded-md hover:from-[#c2410c] hover:to-[#ea580c] transition-all duration-300 text-sm font-medium font-['Poppins'] transform hover:scale-105 shadow-lg hover:shadow-[#ea580c]/50"
                 >
                   Get Started
-                </button>
+                </a>
               </>
             )}
           </div>

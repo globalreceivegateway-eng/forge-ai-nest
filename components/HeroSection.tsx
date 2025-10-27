@@ -14,7 +14,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
       </div>
       
       <div className="absolute inset-0">
-        <img className="w-full h-full object-cover opacity-20" src="https://images.unsplash.com/photo-1526948128573-703ee1a4563e?q=80&w=2070&auto=format&fit=crop" alt="Abstract background"/>
+        <img className="w-full h-full object-cover opacity-20" src="/images/hero-background.png" alt="Abstract background"/>
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black"></div>
       </div>
       

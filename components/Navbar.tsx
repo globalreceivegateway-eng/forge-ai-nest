@@ -56,6 +56,12 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
   };
 
   const scrollToSection = (sectionId: string) => {
+    // If not on home page, navigate there first
+    if (window.location.pathname !== '/') {
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+    
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
@@ -72,7 +78,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
           
           <div className="flex items-center space-x-8">
             <button 
-              onClick={() => scrollToSection('gallery')}
+              onClick={() => window.location.href = '/gallery'}
               className="text-gray-300 hover:text-white transition-all text-sm font-medium font-['Poppins'] relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-[#ea580c] after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
             >
               Gallery
@@ -82,6 +88,12 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
               className="text-gray-300 hover:text-white transition-all text-sm font-medium font-['Poppins'] relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-[#ea580c] after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
             >
               Packages
+            </button>
+            <button 
+              onClick={() => scrollToSection('contact')}
+              className="text-gray-300 hover:text-white transition-all text-sm font-medium font-['Poppins'] relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-[#ea580c] after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
+            >
+              Contact
             </button>
             {user ? (
               <div className="relative">

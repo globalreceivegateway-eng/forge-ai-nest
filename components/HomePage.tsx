@@ -9,6 +9,7 @@ import BeforeAfterSection from './BeforeAfterSection';
 import TestimonialsSection from './TestimonialsSection';
 import PricingSection from './PricingSection';
 import HowItWorksSection from './HowItWorksSection';
+import ContactSection from './ContactSection';
 import Footer from './Footer';
 
 interface HomePageProps {
@@ -29,6 +30,7 @@ const HomePage: React.FC<HomePageProps> = ({ onEnterEditor }) => {
         <TestimonialsSection />
         <PricingSection onSelectPackage={onEnterEditor} />
         <HowItWorksSection />
+        <ContactSection />
       </main>
       <Footer />
     </div>

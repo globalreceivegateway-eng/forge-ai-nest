@@ -62,5 +62,18 @@ export const editImageWithAI = async (
     throw new Error("No edited image returned from server");
   }
 
+  // Save the edited image to user's gallery
+  try {
+    await supabase.from('user_images').insert({
+      user_id: user.id,
+      original_image_url: imageUrl,
+      edited_image_url: data.editedImageUrl,
+      style_used: style
+    });
+  } catch (insertError) {
+    console.error("Error saving to gallery:", insertError);
+    // Don't throw error here, just log it
+  }
+
   return data.editedImageUrl;
 };

@@ -35,7 +35,7 @@ const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center space-y-4">
-      <div className="relative w-full max-w-4xl aspect-video bg-gray-900/50 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-600 overflow-hidden">
+      <div className="relative w-full max-w-4xl aspect-video bg-black rounded-lg flex items-center justify-center border-2 border-dashed border-gray-600 overflow-hidden">
         {!isImageLoaded ? (
           <div className="text-center p-4">
             <button

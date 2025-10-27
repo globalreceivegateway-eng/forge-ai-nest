@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App';
 import AuthPage from './components/AuthPage';
+import GalleryPage from './components/GalleryPage';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -16,6 +17,7 @@ root.render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/gallery" element={<GalleryPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

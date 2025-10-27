@@ -22,10 +22,10 @@ const HomePage: React.FC<HomePageProps> = ({ onEnterEditor }) => {
       <main className="flex-grow">
         <HeroSection onGetStarted={onEnterEditor} />
         <FeaturesSection />
-        <FeaturedArtworksSection />
         <SampleGallery />
         <BeforeAfterSection />
         <WhyChooseSection />
+        <FeaturedArtworksSection />
         <TestimonialsSection />
         <PricingSection onSelectPackage={onEnterEditor} />
         <HowItWorksSection />

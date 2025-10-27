@@ -23,9 +23,19 @@ serve(async (req) => {
       );
     }
 
+    // Validate and sanitize prompt
+    const rawPrompt = typeof prompt === 'string' ? prompt.trim() : '';
+    if (rawPrompt.length > 500) {
+      return new Response(
+        JSON.stringify({ error: 'Custom prompt must be less than 500 characters' }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+    const finalPrompt = (rawPrompt || 'Enhance this image to look more professional and visually appealing.').replace(/\s+/g, ' ').slice(0, 500);
+
     // Initialize Supabase client
-    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Deduct credits using the database function
@@ -59,7 +69,7 @@ serve(async (req) => {
             content: [
               {
                 type: "text",
-                text: prompt
+                text: finalPrompt
               },
               {
                 type: "image_url",

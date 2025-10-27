@@ -39,9 +39,20 @@ export const editImageWithAI = async (
     throw new Error("Insufficient credits. You need 5 credits to edit an image. Please upgrade your plan.");
   }
 
-  const prompt = style === 'custom' && customPrompt 
-    ? customPrompt 
-    : STYLE_PROMPTS[style] || "Enhance this image to look more professional and visually appealing.";
+  // Validate and sanitize custom prompt
+  let prompt: string;
+  if (style === 'custom') {
+    const raw = (customPrompt ?? '').trim();
+    if (!raw) {
+      throw new Error('Please enter a custom prompt or choose a preset style.');
+    }
+    if (raw.length > 500) {
+      throw new Error('Custom prompt must be less than 500 characters.');
+    }
+    prompt = raw.replace(/\s+/g, ' ');
+  } else {
+    prompt = STYLE_PROMPTS[style] || 'Enhance this image to look more professional and visually appealing.';
+  }
 
   // Convert blob URL to base64 if needed
   let base64Image = imageUrl;

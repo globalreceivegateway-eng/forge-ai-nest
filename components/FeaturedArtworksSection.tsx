@@ -2,12 +2,14 @@ import React from 'react';
 
 const FeaturedArtworksSection: React.FC = () => {
   const artworks = [
-    { id: 1, imageUrl: '/images/artistic-style.png', size: 'large' },
-    { id: 2, imageUrl: '/images/professional-portrait.png', size: 'medium' },
-    { id: 3, imageUrl: '/images/cinematic-photo.png', size: 'medium' },
-    { id: 4, imageUrl: '/images/beauty-retouch.png', size: 'small' },
-    { id: 5, imageUrl: '/images/magazine-cover.png', size: 'large' },
-    { id: 6, imageUrl: '/images/studio-lighting.png', size: 'medium' },
+    { id: 1, imageUrl: '/images/featured/magazine-cover.png', size: 'large' },
+    { id: 2, imageUrl: '/images/featured/artwork-1.png', size: 'medium' },
+    { id: 3, imageUrl: '/images/featured/artwork-2.png', size: 'medium' },
+    { id: 4, imageUrl: '/images/featured/fashion.png', size: 'large' },
+    { id: 5, imageUrl: '/images/featured/artwork-3.jpg', size: 'medium' },
+    { id: 6, imageUrl: '/images/featured/artwork-4.jpg', size: 'small' },
+    { id: 7, imageUrl: '/images/featured/artwork-5.jpg', size: 'medium' },
+    { id: 8, imageUrl: '/images/featured/artwork-6.png', size: 'large' },
   ];
 
   const getSizeClasses = (size: string) => {

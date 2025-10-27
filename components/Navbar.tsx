@@ -38,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <a href="/" className="flex items-center cursor-pointer group">
-            <img src={logo} alt="SparkFrameAI" className="h-8 w-auto group-hover:scale-105 transition-transform duration-300" />
+            <img src={logo} alt="SparkFrameAI" className="h-16 w-auto group-hover:scale-105 transition-transform duration-300" />
           </a>
           
           <div className="flex items-center space-x-8">

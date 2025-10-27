@@ -58,26 +58,10 @@ const ContactSection: React.FC = () => {
             
             <div className="space-y-4 sm:space-y-6">
               <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg border border-slate-700/50">
-                <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-primary mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Address</h3>
-                  <p className="text-sm sm:text-base text-slate-300">18, Fatai Kaffo Street Lagos</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg border border-slate-700/50">
                 <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-primary mt-1 flex-shrink-0" />
                 <div>
                   <h3 className="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Email</h3>
-                  <p className="text-sm sm:text-base text-slate-300">info@aistudio.ng</p>
-                </div>
-              </div>
-
-              <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg border border-slate-700/50">
-                <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-primary mt-1 flex-shrink-0" />
-                <div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Phone</h3>
-                  <p className="text-sm sm:text-base text-slate-300">07040863723</p>
+                  <p className="text-sm sm:text-base text-slate-300">info@aisparrkframe.com</p>
                 </div>
               </div>
             </div>

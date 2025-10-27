@@ -55,7 +55,21 @@ export const editImageWithAI = async (
 
   if (error) {
     console.error("Edge function error:", error);
-    throw new Error(error.message || "Failed to edit image");
+    const anyErr: any = error as any;
+    const status = anyErr?.status;
+    const ctx = anyErr?.context;
+    const serverMsg = (typeof ctx === 'string' ? ctx : ctx?.error || ctx?.message) as string | undefined;
+    const rawMsg = serverMsg || error.message || 'Failed to edit image';
+
+    // Normalize common AI gateway errors to friendly messages
+    if (status === 429 || /429|rate limit/i.test(rawMsg)) {
+      throw new Error('Rate limit exceeded. Please wait a moment and try again.');
+    }
+    if (status === 402 || /402|payment|credits|insufficient/i.test(rawMsg)) {
+      throw new Error('AI credits exhausted. Please add credits in Settings > Workspace > Usage.');
+    }
+
+    throw new Error(rawMsg);
   }
 
   if (!data?.editedImageUrl) {

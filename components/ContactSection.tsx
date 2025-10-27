@@ -49,35 +49,35 @@ const ContactSection: React.FC = () => {
   };
 
   return (
-    <section id="contact" className="py-20 px-6 bg-black">
+    <section id="contact" className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-black">
       <div className="max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-10 md:gap-12">
           {/* Contact Information */}
           <div>
-            <h2 className="text-4xl font-bold mb-8 text-white">Contact Information</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-white">Contact Information</h2>
             
-            <div className="space-y-6">
-              <div className="flex items-start gap-4 p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg border border-slate-700/50">
-                <MapPin className="w-6 h-6 text-primary mt-1" />
+            <div className="space-y-4 sm:space-y-6">
+              <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg border border-slate-700/50">
+                <MapPin className="w-5 h-5 sm:w-6 sm:h-6 text-primary mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Address</h3>
-                  <p className="text-slate-300">18, Fatai Kaffo Street Lagos</p>
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Address</h3>
+                  <p className="text-sm sm:text-base text-slate-300">18, Fatai Kaffo Street Lagos</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg border border-slate-700/50">
-                <Mail className="w-6 h-6 text-primary mt-1" />
+              <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg border border-slate-700/50">
+                <Mail className="w-5 h-5 sm:w-6 sm:h-6 text-primary mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Email</h3>
-                  <p className="text-slate-300">info@aistudio.ng</p>
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Email</h3>
+                  <p className="text-sm sm:text-base text-slate-300">info@aistudio.ng</p>
                 </div>
               </div>
 
-              <div className="flex items-start gap-4 p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg border border-slate-700/50">
-                <Phone className="w-6 h-6 text-primary mt-1" />
+              <div className="flex items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-gradient-to-br from-slate-800/50 to-slate-900/50 rounded-lg border border-slate-700/50">
+                <Phone className="w-5 h-5 sm:w-6 sm:h-6 text-primary mt-1 flex-shrink-0" />
                 <div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Phone</h3>
-                  <p className="text-slate-300">07040863723</p>
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-1 sm:mb-2">Phone</h3>
+                  <p className="text-sm sm:text-base text-slate-300">07040863723</p>
                 </div>
               </div>
             </div>
@@ -85,7 +85,7 @@ const ContactSection: React.FC = () => {
 
           {/* Contact Form */}
           <div>
-            <h2 className="text-4xl font-bold mb-8 text-white">Send us a Message</h2>
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-white">Send us a Message</h2>
             
             {submitStatus === 'success' && (
               <div className="mb-6 p-4 bg-green-500/10 border border-green-500/50 rounded-lg text-green-400">
@@ -99,10 +99,10 @@ const ContactSection: React.FC = () => {
               </div>
             )}
             
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
               <input type="hidden" name="access_key" value="d3bf20f9-45b9-43a4-94df-cfb14ba73f84" />
               <div>
-                <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
+                <label htmlFor="name" className="block text-xs sm:text-sm font-medium text-slate-300 mb-2">
                   Name
                 </label>
                 <input
@@ -112,13 +112,13 @@ const ContactSection: React.FC = () => {
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
                   placeholder="Your name"
                 />
               </div>
 
               <div>
-                <label htmlFor="email" className="block text-sm font-medium text-slate-300 mb-2">
+                <label htmlFor="email" className="block text-xs sm:text-sm font-medium text-slate-300 mb-2">
                   Email
                 </label>
                 <input
@@ -128,13 +128,13 @@ const ContactSection: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
                   placeholder="your.email@example.com"
                 />
               </div>
 
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-slate-300 mb-2">
+                <label htmlFor="subject" className="block text-xs sm:text-sm font-medium text-slate-300 mb-2">
                   Subject
                 </label>
                 <input
@@ -144,13 +144,13 @@ const ContactSection: React.FC = () => {
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all"
                   placeholder="What is this about?"
                 />
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-slate-300 mb-2">
+                <label htmlFor="message" className="block text-xs sm:text-sm font-medium text-slate-300 mb-2">
                   Message
                 </label>
                 <textarea
@@ -160,7 +160,7 @@ const ContactSection: React.FC = () => {
                   onChange={handleChange}
                   required
                   rows={5}
-                  className="w-full px-4 py-3 bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all resize-none"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base bg-slate-800/50 border border-slate-700/50 rounded-lg text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all resize-none"
                   placeholder="Your message here..."
                 />
               </div>

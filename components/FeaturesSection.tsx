@@ -23,20 +23,20 @@ const features = [
 
 const FeaturesSection: React.FC = () => {
   return (
-    <div className="py-16 sm:py-24 bg-black border-t border-gray-800">
+    <div className="py-12 sm:py-16 md:py-24 bg-black border-t border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:text-center animate-fade-in">
+        <div className="text-center lg:text-center animate-fade-in">
           <h2 className="text-base text-[#ea580c] font-semibold tracking-wide uppercase font-['Poppins']">Features</h2>
-          <p className="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-white sm:text-4xl font-['Playfair_Display']">
+          <p className="mt-2 text-2xl sm:text-3xl md:text-4xl leading-8 font-extrabold tracking-tight text-white font-['Playfair_Display']">
             Everything You Need to Create Stunning Images
           </p>
-          <p className="mt-4 max-w-2xl text-lg text-gray-400 lg:mx-auto font-['Poppins']">
+          <p className="mt-4 max-w-2xl text-base sm:text-lg text-gray-400 mx-auto font-['Poppins']">
             SparkFrameAI combines cutting-edge technology with a simple interface to give your photos a professional edge.
           </p>
         </div>
 
-        <div className="mt-20">
-          <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-3 md:gap-x-8 md:gap-y-10">
+        <div className="mt-12 sm:mt-16 md:mt-20">
+          <dl className="space-y-10 md:space-y-0 md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-x-6 lg:gap-x-8 md:gap-y-10">
             {features.map((feature) => {
               const IconComponent = feature.icon;
               return (

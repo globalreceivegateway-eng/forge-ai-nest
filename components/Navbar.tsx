@@ -73,10 +73,10 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <a href="/" className="flex items-center cursor-pointer group">
-            <img src={logo} alt="SparkFrameAI" className="h-16 w-auto group-hover:scale-105 transition-transform duration-300" />
+            <img src={logo} alt="SparkFrameAI" className="h-12 sm:h-16 w-auto group-hover:scale-105 transition-transform duration-300" />
           </a>
           
-          <div className="flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-4 lg:space-x-8">
             <button 
               onClick={() => window.location.href = '/gallery'}
               className="text-gray-300 hover:text-white transition-all text-sm font-medium font-['Poppins'] relative after:content-[''] after:absolute after:w-full after:scale-x-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-[#ea580c] after:origin-bottom-right after:transition-transform after:duration-300 hover:after:scale-x-100 hover:after:origin-bottom-left"
@@ -180,6 +180,16 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
                 </a>
               </>
             )}
+          </div>
+          
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <a
+              href="/auth"
+              className="bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white px-4 py-2 rounded-md hover:from-[#c2410c] hover:to-[#ea580c] transition-all duration-300 text-sm font-medium font-['Poppins']"
+            >
+              Get Started
+            </a>
           </div>
         </div>
       </div>

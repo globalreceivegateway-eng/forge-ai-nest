@@ -18,24 +18,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({ onGetStarted }) => {
         <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black"></div>
       </div>
       
-      <div className="relative max-w-7xl mx-auto py-24 px-4 sm:py-32 sm:px-6 lg:px-8 text-center">
-        <h1 className="text-5xl font-extrabold tracking-tight text-white sm:text-6xl lg:text-7xl animate-fade-in font-['Playfair_Display']">
+      <div className="relative max-w-7xl mx-auto py-16 px-4 sm:py-24 md:py-32 sm:px-6 lg:px-8 text-center">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight text-white animate-fade-in font-['Playfair_Display']">
           <span className="block">Transform Your Photos with</span>
           <span className="block mt-2 bg-gradient-to-r from-[#ea580c] via-[#f97316] to-[#fb923c] bg-clip-text text-transparent animate-scale-in">
             One-Click AI Magic
           </span>
         </h1>
         
-        <p className="mt-8 max-w-lg mx-auto text-lg sm:text-xl text-gray-300 sm:max-w-3xl animate-fade-in font-['Poppins']" style={{ animationDelay: '0.2s' }}>
+        <p className="mt-6 sm:mt-8 max-w-lg mx-auto text-base sm:text-lg md:text-xl text-gray-300 sm:max-w-3xl animate-fade-in font-['Poppins'] px-4" style={{ animationDelay: '0.2s' }}>
           Instantly elevate your images with professional styles, cinematic looks, and artistic flair. 
           Our AI-powered editor does the hard work for you.
         </p>
         
-        <div className="mt-12 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center animate-fade-in" style={{ animationDelay: '0.4s' }}>
-          <div className="space-y-4 sm:space-y-0 sm:mx-auto sm:inline-grid">
+        <div className="mt-8 sm:mt-12 max-w-sm mx-auto sm:max-w-none sm:flex sm:justify-center animate-fade-in px-4" style={{ animationDelay: '0.4s' }}>
+          <div className="w-full sm:w-auto">
             <button
               onClick={onGetStarted}
-              className="group relative flex items-center justify-center px-10 py-4 border border-transparent text-lg font-semibold rounded-full shadow-2xl text-white bg-gradient-to-r from-[#ea580c] to-[#f97316] hover:from-[#c2410c] hover:to-[#ea580c] transition-all duration-300 transform hover:scale-105 hover:shadow-[#ea580c]/50 font-['Poppins']"
+              className="group relative w-full sm:w-auto flex items-center justify-center px-8 sm:px-10 py-3 sm:py-4 border border-transparent text-base sm:text-lg font-semibold rounded-full shadow-2xl text-white bg-gradient-to-r from-[#ea580c] to-[#f97316] hover:from-[#c2410c] hover:to-[#ea580c] transition-all duration-300 transform hover:scale-105 hover:shadow-[#ea580c]/50 font-['Poppins']"
             >
               <span className="relative z-10">Get Started for Free</span>
               <svg className="ml-3 h-5 w-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

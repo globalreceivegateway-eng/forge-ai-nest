@@ -68,21 +68,23 @@ const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage }) => {
   const packages = [
     {
       title: 'Basic',
-      price: '€9.99',
+      price: '$20',
       features: [
+        '100 tokens',
         'AI-powered touch-ups',
         'Color correction',
         'Blemish removal',
-        'Up to 4 photos per session',
+        'Up to 20 images',
         'Digital files delivered in 24 hours',
         'High-resolution downloads',
       ],
     },
     {
       title: 'Standard',
-      price: '€19.99',
+      price: '$50',
       isPopular: true,
       features: [
+        '200 tokens',
         'Everything in Basic',
         'Style transformations',
         'Cartoon style',
@@ -94,16 +96,16 @@ const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage }) => {
     },
     {
       title: 'Premium',
-      price: '€39.99',
+      price: '$70',
       features: [
+        '300 tokens',
         'Everything in Standard',
-        'Physical products included',
-        'Premium photo album',
-        'Custom frames',
-        'Gift box packaging',
+        'Premium support',
+        'Custom style requests',
+        'Bulk processing',
         'Express delivery (2-3 hours)',
         'Dedicated support',
-        'Free shipping',
+        'Commercial license',
       ],
     },
   ];

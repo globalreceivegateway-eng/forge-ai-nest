@@ -18,6 +18,27 @@ export const editImageWithAI = async (
   style: string,
   customPrompt?: string
 ): Promise<string> => {
+  // Check user credits first
+  const { data: { user } } = await supabase.auth.getUser();
+  
+  if (!user) {
+    throw new Error("You must be logged in to edit images");
+  }
+
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('credits')
+    .eq('id', user.id)
+    .single();
+
+  if (profileError) {
+    throw new Error("Failed to check credits");
+  }
+
+  if (!profile || profile.credits < 5) {
+    throw new Error("Insufficient credits. You need 5 credits to edit an image. Please upgrade your plan.");
+  }
+
   const prompt = style === 'custom' && customPrompt 
     ? customPrompt 
     : STYLE_PROMPTS[style] || "Enhance this image to look more professional and visually appealing.";
@@ -29,7 +50,7 @@ export const editImageWithAI = async (
   }
 
   const { data, error } = await supabase.functions.invoke('edit-image', {
-    body: { imageUrl: base64Image, prompt }
+    body: { imageUrl: base64Image, prompt, userId: user.id }
   });
 
   if (error) {

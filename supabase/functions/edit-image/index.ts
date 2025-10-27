@@ -1,6 +1,7 @@
 // @ts-nocheck
 /// <reference lib="deno.ns" />
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.7";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -13,7 +14,31 @@ serve(async (req) => {
   }
 
   try {
-    const { imageUrl, prompt } = await req.json();
+    const { imageUrl, prompt, userId } = await req.json();
+    
+    if (!userId) {
+      return new Response(
+        JSON.stringify({ error: "User ID is required" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // Initialize Supabase client
+    const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
+    // Deduct credits using the database function
+    const { data: deductResult, error: deductError } = await supabase
+      .rpc('deduct_credits', { user_id: userId, amount: 5 });
+
+    if (deductError || !deductResult) {
+      console.error("Failed to deduct credits:", deductError);
+      return new Response(
+        JSON.stringify({ error: "Insufficient credits. You need 5 credits to edit an image." }),
+        { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
     const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
     if (!LOVABLE_API_KEY) {

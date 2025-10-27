@@ -1,5 +1,6 @@
 import React from 'react';
 import { Facebook, Instagram, Youtube, Mail } from 'lucide-react';
+import logo from '../src/assets/logo.png';
 
 const Footer: React.FC = () => {
   return (
@@ -9,12 +10,7 @@ const Footer: React.FC = () => {
           {/* Brand Section */}
           <div className="md:col-span-1">
             <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-pink-500 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">SF</span>
-              </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">
-                SparkFrameAI
-              </span>
+              <img src={logo} alt="SparkFrameAI" className="h-8 w-auto" />
             </div>
             <p className="text-gray-400 text-sm mb-4">
               Transform your images with AI-powered photo editing. Professional results in seconds.

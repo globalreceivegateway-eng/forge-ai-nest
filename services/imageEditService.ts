@@ -61,7 +61,7 @@ export const editImageWithAI = async (
   }
 
   const { data, error } = await supabase.functions.invoke('edit-image', {
-    body: { imageUrl: base64Image, prompt, userId: user.id }
+    body: { imageUrl: base64Image, prompt }
   });
 
   if (error) {

@@ -14,14 +14,33 @@ serve(async (req) => {
   }
 
   try {
-    const { imageUrl, prompt, userId } = await req.json();
-    
-    if (!userId) {
+    // Get authenticated user from JWT
+    const authHeader = req.headers.get('Authorization');
+    if (!authHeader) {
       return new Response(
-        JSON.stringify({ error: "User ID is required" }),
-        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        JSON.stringify({ error: 'Unauthorized - Missing authorization header' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
+
+    const token = authHeader.replace('Bearer ', '');
+    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+    const supabaseAnonKey = Deno.env.get('SUPABASE_ANON_KEY')!;
+    const supabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser(token);
+    
+    if (authError || !user) {
+      console.error('Auth error:', authError);
+      return new Response(
+        JSON.stringify({ error: 'Unauthorized - Invalid token' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const userId = user.id; // Use authenticated user ID from JWT
+    
+    const { imageUrl, prompt } = await req.json();
 
     // Validate and sanitize prompt
     const rawPrompt = typeof prompt === 'string' ? prompt.trim() : '';
@@ -33,10 +52,9 @@ serve(async (req) => {
     }
     const finalPrompt = (rawPrompt || 'Enhance this image to look more professional and visually appealing.').replace(/\s+/g, ' ').slice(0, 500);
 
-    // Initialize Supabase client
-    const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
-    const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    // Initialize Supabase client with service role for credit deduction
+    const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+    const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
     // Deduct credits using the database function
     const { data: deductResult, error: deductError } = await supabase

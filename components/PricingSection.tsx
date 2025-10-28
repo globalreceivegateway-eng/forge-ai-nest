@@ -3,12 +3,13 @@ import React from 'react';
 interface PricingCardProps {
   title: string;
   price: string;
+  description: string;
   features: string[];
   isPopular?: boolean;
-  onSelect: () => void;
+  buttonLink: string;
 }
 
-const PricingCard: React.FC<PricingCardProps> = ({ title, price, features, isPopular, onSelect }) => {
+const PricingCard: React.FC<PricingCardProps> = ({ title, price, description, features, isPopular, buttonLink }) => {
   return (
     <div className={`relative bg-black rounded-xl sm:rounded-2xl p-6 sm:p-8 border-2 ${isPopular ? 'border-[#ea580c] shadow-2xl shadow-[#ea580c]/30' : 'border-gray-800'} transition-all duration-300 transform hover:scale-105`}>
       {isPopular && (
@@ -28,11 +29,12 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, price, features, isPop
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
           </svg>
           <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 sm:mb-4 font-['Poppins']">{title}</h3>
+          <p className="text-gray-400 text-xs sm:text-sm font-['Poppins'] px-2">{description}</p>
         </div>
         <div className="mb-2">
           <span className="text-4xl sm:text-5xl font-bold text-white font-['Playfair_Display']">{price}</span>
         </div>
-        <p className="text-gray-400 text-xs sm:text-sm font-['Poppins']">per session</p>
+        <p className="text-gray-400 text-xs sm:text-sm font-['Poppins']">one-time</p>
       </div>
 
       <ul className="space-y-2 sm:space-y-3 mb-6 sm:mb-8">
@@ -46,16 +48,18 @@ const PricingCard: React.FC<PricingCardProps> = ({ title, price, features, isPop
         ))}
       </ul>
 
-      <button 
-        onClick={onSelect}
-        className={`w-full py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 font-['Poppins'] transform hover:scale-105 ${
+      <a 
+        href={buttonLink}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`block w-full py-3 sm:py-4 rounded-lg sm:rounded-xl text-sm sm:text-base font-semibold transition-all duration-300 font-['Poppins'] transform hover:scale-105 text-center ${
           isPopular 
             ? 'bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white hover:from-[#c2410c] hover:to-[#ea580c] shadow-lg hover:shadow-[#ea580c]/50' 
             : 'bg-transparent text-white border-2 border-gray-700 hover:border-[#ea580c] hover:bg-gray-900'
         }`}
       >
         Get Started
-      </button>
+      </a>
     </div>
   );
 };
@@ -67,45 +71,58 @@ interface PricingSectionProps {
 const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage }) => {
   const packages = [
     {
-      title: 'Basic',
-      price: '$20',
+      title: 'Test Trial Pack',
+      price: '€6',
+      description: 'Perfect for testing and exploring the platform before upgrading.',
+      buttonLink: 'https://whop.com/aisparkframe/test-trial-pack/',
       features: [
-        '100 tokens',
-        'AI-powered touch-ups',
-        'Color correction',
-        'Blemish removal',
-        'Up to 20 images',
-        'Digital files delivered in 24 hours',
-        'High-resolution downloads',
+        '100 Tokens',
+        'Up to ~20 Image Generations',
+        'Access to All Styles & Models',
+        'High-Quality Photos',
+        'High Resemblance Results',
+        'Remix Any Photo',
+        'Unlimited Photo Storage',
+        'Animate Any Photo',
+        'Download Your Media',
+        'Email Support',
       ],
     },
     {
-      title: 'Standard',
-      price: '$50',
+      title: 'Starter Pack',
+      price: '€20',
+      description: 'Ideal for creators and individuals who want to take their AI visuals to the next level.',
+      buttonLink: 'https://whop.com/aisparkframe/starter-pack-fc/',
       isPopular: true,
       features: [
-        '200 tokens',
-        'Everything in Basic',
-        'Style transformations',
-        'Cartoon style',
-        'Watercolor painting style',
-        '3D rendered scenes',
-        'Multiple style variations',
-        'Priority processing',
+        '300 Tokens',
+        'Up to ~150 Image Generations',
+        'Access to All Styles & Models',
+        'High-Quality Photos',
+        'High Resemblance Results',
+        'Remix Any Photo',
+        'Unlimited Photo Storage',
+        'Animate Any Photo',
+        'Download Your Media',
+        '24/7 Support',
       ],
     },
     {
-      title: 'Premium',
-      price: '$70',
+      title: 'Pro Pack',
+      price: '€50',
+      description: 'Designed for growing businesses and professionals who need advanced features and higher limits.',
+      buttonLink: 'https://whop.com/aisparkframe/pro-pack-d9/',
       features: [
-        '300 tokens',
-        'Everything in Standard',
-        'Premium support',
-        'Custom style requests',
-        'Bulk processing',
-        'Express delivery (2-3 hours)',
-        'Dedicated support',
-        'Commercial license',
+        '650 Tokens',
+        'Up to ~1300 Image Generations',
+        'Access to All Styles & Models',
+        'High-Quality Photos',
+        'High Resemblance Results',
+        'Remix Any Photo',
+        'Unlimited Photo Storage',
+        'Animate Any Photo',
+        'Download Your Media',
+        '24/7 Priority Support',
       ],
     },
   ];
@@ -126,9 +143,10 @@ const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage }) => {
               key={pkg.title}
               title={pkg.title}
               price={pkg.price}
+              description={pkg.description}
               features={pkg.features}
               isPopular={pkg.isPopular}
-              onSelect={() => onSelectPackage?.(pkg.title)}
+              buttonLink={pkg.buttonLink}
             />
           ))}
         </div>

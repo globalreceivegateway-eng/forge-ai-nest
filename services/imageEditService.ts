@@ -76,11 +76,19 @@ export const editImageWithAI = async (
     if (status === 429 || /429|rate limit/i.test(rawMsg)) {
       throw new Error('Rate limit exceeded. Please wait a moment and try again.');
     }
-    if (status === 402 || /402|payment|credits|insufficient/i.test(rawMsg)) {
+    if (status === 402 || /402|payment|credits|insufficient|not enough credits/i.test(rawMsg)) {
       throw new Error('AI credits exhausted. Please add credits in Settings > Workspace > Usage.');
+    }
+    if (status === 503 || /503|overloaded|busy/i.test(rawMsg)) {
+      throw new Error('The AI service is currently busy. Please try again in a moment.');
     }
 
     throw new Error(rawMsg);
+  }
+
+  // Handle new response format with success flag
+  if (data?.success === false) {
+    throw new Error(data.error || "Failed to edit image");
   }
 
   if (!data?.editedImageUrl) {

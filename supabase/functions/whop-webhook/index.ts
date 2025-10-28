@@ -76,10 +76,10 @@ serve(async (req) => {
     const body = await req.json();
     console.log('📦 Raw payload:', JSON.stringify(body, null, 2));
 
-    // Extract webhook data (Whop sends: action, data)
-    const { action, data } = body;
+    // Extract webhook data (Whop sends: type, data)
+    const { type: eventType, data } = body;
     
-    console.log('🎯 Event type:', action);
+    console.log('🎯 Event type:', eventType);
     console.log('📄 Event data:', JSON.stringify(data, null, 2));
 
     // Initialize Supabase client with service role key
@@ -87,9 +87,9 @@ serve(async (req) => {
     const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-    // Handle payment events from Whop
-    if (action === 'payment_succeeded' || action === 'invoice_paid') {
-      console.log('💳 Processing payment event:', action);
+    // Handle payment events from Whop (note: Whop uses dots in event names)
+    if (eventType === 'payment.succeeded' || eventType === 'invoice.paid') {
+      console.log('💳 Processing payment event:', eventType);
       
       // Extract user email and plan name from Whop payload
       const userEmail = data?.user?.email || data?.email || data?.customer?.email;
@@ -175,14 +175,14 @@ serve(async (req) => {
     }
 
     // Handle other Whop events (for logging)
-    if (action === 'membership_activated') {
+    if (eventType === 'membership.activated') {
       console.log('🎉 Membership activated:', data);
-    } else if (action === 'membership_deactivated') {
+    } else if (eventType === 'membership.deactivated') {
       console.log('🚫 Membership deactivated:', data);
-    } else if (action === 'payment_failed') {
+    } else if (eventType === 'payment.failed') {
       console.log('❌ Payment failed:', data);
     } else {
-      console.log('ℹ️ Unhandled event type:', action);
+      console.log('ℹ️ Unhandled event type:', eventType);
     }
 
     // Always return 200 OK to Whop

@@ -1,5 +1,53 @@
 // @ts-nocheck
 /// <reference lib="deno.ns" />
+
+/**
+ * WHOP WEBHOOK INTEGRATION FOR SUPABASE
+ * 
+ * This Edge Function handles Whop payment webhooks and automatically adds credits to users.
+ * 
+ * SETUP INSTRUCTIONS:
+ * 
+ * 1. DEPLOY THIS EDGE FUNCTION:
+ *    - This function deploys automatically when you save changes in Lovable
+ *    - Your webhook URL is: https://kppoejwyebhxayjvxsaf.supabase.co/functions/v1/whop-webhook
+ * 
+ * 2. CONFIGURE WHOP WEBHOOK:
+ *    a. Go to your Whop Dashboard: https://whop.com/dashboard
+ *    b. Navigate to Settings → Developers → Webhooks
+ *    c. Click "Add Webhook"
+ *    d. Enter webhook URL: https://kppoejwyebhxayjvxsaf.supabase.co/functions/v1/whop-webhook
+ *    e. Select these events:
+ *       - payment_succeeded (main event for adding credits)
+ *       - membership_activated (backup event)
+ *       - payment_failed (for logging)
+ *       - membership_deactivated (for logging)
+ *    f. Save the webhook
+ * 
+ * 3. TEST THE WEBHOOK:
+ *    a. In Whop Dashboard, go to your webhook settings
+ *    b. Click "Test" on your webhook
+ *    c. Select "payment_succeeded" event
+ *    d. Send test payload
+ *    e. Check logs: https://supabase.com/dashboard/project/kppoejwyebhxayjvxsaf/functions/whop-webhook/logs
+ * 
+ * 4. VERIFY CREDITS:
+ *    - After a successful test, check your Supabase database
+ *    - View profiles table: https://supabase.com/dashboard/project/kppoejwyebhxayjvxsaf/editor
+ *    - Credits should be added to the user's account
+ * 
+ * PLAN CREDIT MAPPING:
+ * - Test Trial Pack: 100 credits
+ * - Starter Pack: 300 credits
+ * - Pro Pack: 650 credits
+ * 
+ * IMPORTANT NOTES:
+ * - User email from Whop MUST match email in Supabase profiles table
+ * - Credits are ADDED to existing balance (not replaced)
+ * - Plan names must contain exact strings (case-sensitive)
+ * - All events are logged for debugging
+ */
+
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.39.7";
 

@@ -169,10 +169,14 @@ const AdminPanel: React.FC = () => {
         .from('profiles')
         .select('*')
         .eq('email', searchEmail.trim())
-        .single();
+        .maybeSingle();
 
-      if (error || !data) {
-        alert('User not found');
+      if (error) {
+        console.error('Error searching user:', error);
+        alert('Error searching for user');
+        setSearchedProfile(null);
+      } else if (!data) {
+        alert('User not found with this email');
         setSearchedProfile(null);
       } else {
         setSearchedProfile(data);

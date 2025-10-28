@@ -67,38 +67,35 @@ serve(async (req) => {
         { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
-    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
+    const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
 
-    if (!LOVABLE_API_KEY) {
-      throw new Error("LOVABLE_API_KEY is not configured");
+    if (!GEMINI_API_KEY) {
+      throw new Error("GEMINI_API_KEY is not configured");
     }
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`, {
       method: "POST",
       headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        model: "google/gemini-2.5-flash-image-preview",
-        messages: [
-          {
-            role: "user",
-            content: [
-              {
-                type: "text",
-                text: finalPrompt
-              },
-              {
-                type: "image_url",
-                image_url: {
-                  url: imageUrl
-                }
+        contents: [{
+          parts: [
+            { text: finalPrompt },
+            {
+              inline_data: {
+                mime_type: imageUrl.startsWith('data:') ? imageUrl.split(';')[0].split(':')[1] : 'image/jpeg',
+                data: imageUrl.startsWith('data:') ? imageUrl.split(',')[1] : imageUrl
               }
-            ]
-          }
-        ],
-        modalities: ["image", "text"]
+            }
+          ]
+        }],
+        generationConfig: {
+          temperature: 0.4,
+          topK: 32,
+          topP: 1,
+          maxOutputTokens: 4096,
+        }
       })
     });
 
@@ -124,11 +121,15 @@ serve(async (req) => {
     }
 
     const data = await response.json();
-    const editedImageUrl = data.choices?.[0]?.message?.images?.[0]?.image_url?.url;
-
-    if (!editedImageUrl) {
-      throw new Error("No image returned from API");
+    
+    // Extract image from Gemini response
+    const imageData = data.candidates?.[0]?.content?.parts?.find((part: any) => part.inlineData)?.inlineData?.data;
+    
+    if (!imageData) {
+      throw new Error("No image returned from Gemini API");
     }
+
+    const editedImageUrl = `data:image/png;base64,${imageData}`;
 
     return new Response(
       JSON.stringify({ editedImageUrl }),

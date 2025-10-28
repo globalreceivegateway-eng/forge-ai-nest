@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import App from './App';
 import AuthPage from './components/AuthPage';
 import GalleryPage from './components/GalleryPage';
+import AdminPanel from './components/AdminPanel';
 
 const rootElement = document.getElementById('root');
 if (!rootElement) {
@@ -18,6 +19,7 @@ root.render(
         <Route path="/" element={<App />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/gallery" element={<GalleryPage />} />
+        <Route path="/admin" element={<AdminPanel />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>

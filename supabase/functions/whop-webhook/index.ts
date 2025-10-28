@@ -40,8 +40,8 @@ serve(async (req) => {
 
     // Handle different Whop webhook events
     switch (action) {
-      case 'membership.went_valid':
-      case 'payment.succeeded':
+      case 'membership_activated':
+      case 'payment_succeeded':
         console.log('Processing payment/membership activation:', data);
         
         // Extract user email and plan name from webhook data
@@ -96,12 +96,12 @@ serve(async (req) => {
         }
         break;
       
-      case 'membership.went_invalid':
+      case 'membership_deactivated':
         console.log('Membership expired or cancelled:', data);
         // You can add logic here to handle membership cancellation if needed
         break;
       
-      case 'payment.failed':
+      case 'payment_failed':
         console.log('Payment failed:', data);
         break;
       

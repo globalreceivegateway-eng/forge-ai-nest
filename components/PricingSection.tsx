@@ -73,7 +73,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage }) => {
     {
       title: 'Test Trial Pack',
       price: '€6',
-      description: 'Perfect for testing and exploring the platform before upgrading.',
+      description: '🧪 Try, explore, and experience AI.',
       buttonLink: 'https://whop.com/aisparkframe/test-trial-pack/',
       features: [
         '100 Tokens',
@@ -91,7 +91,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage }) => {
     {
       title: 'Starter Pack',
       price: '€20',
-      description: 'Ideal for creators and individuals who want to take their AI visuals to the next level.',
+      description: '🚀 Create, grow, and enhance creativity.',
       buttonLink: 'https://whop.com/aisparkframe/starter-pack-fc/',
       isPopular: true,
       features: [
@@ -110,7 +110,7 @@ const PricingSection: React.FC<PricingSectionProps> = ({ onSelectPackage }) => {
     {
       title: 'Pro Pack',
       price: '€50',
-      description: 'Designed for growing businesses and professionals who need advanced features and higher limits.',
+      description: '💼 Scale, automate, and boost productivity.',
       buttonLink: 'https://whop.com/aisparkframe/pro-pack-d9/',
       features: [
         '650 Tokens',

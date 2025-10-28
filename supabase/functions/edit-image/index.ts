@@ -67,49 +67,66 @@ serve(async (req) => {
         { status: 402, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
-    const GEMINI_API_KEY = Deno.env.get("GEMINI_API_KEY");
+    const LOVABLE_API_KEY = Deno.env.get("LOVABLE_API_KEY");
 
-    if (!GEMINI_API_KEY) {
-      throw new Error("GEMINI_API_KEY is not configured");
+    if (!LOVABLE_API_KEY) {
+      throw new Error("LOVABLE_API_KEY is not configured");
     }
 
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        contents: [{
-          parts: [
-            { text: finalPrompt },
+    // Normalize the incoming image URL to a form accepted by the Lovable AI Gateway
+    const normalizeImageUrl = (input: string): string => {
+      const s = (input || '').trim();
+      if (s.startsWith('data:')) return s; // already a data URL
+      // If it's raw base64 (no data: prefix), wrap it
+      if (/^[A-Za-z0-9+/=]+$/.test(s)) return `data:image/png;base64,${s}`;
+      return s; // assume https URL
+    };
+
+    const sourceImageUrl = normalizeImageUrl(imageUrl);
+
+    const makeRequest = async () => {
+      return await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash-image-preview",
+          messages: [
             {
-              inline_data: {
-                mime_type: imageUrl.startsWith('data:') ? imageUrl.split(';')[0].split(':')[1] : 'image/jpeg',
-                data: imageUrl.startsWith('data:') ? imageUrl.split(',')[1] : imageUrl
-              }
+              role: "user",
+              content: [
+                { type: "text", text: finalPrompt },
+                { type: "image_url", image_url: { url: sourceImageUrl } }
+              ]
             }
-          ]
-        }],
-        generationConfig: {
-          temperature: 0.4,
-          topK: 32,
-          topP: 1,
-          maxOutputTokens: 4096,
-        }
-      })
-    });
+          ],
+          modalities: ["image", "text"],
+        }),
+      });
+    };
+
+    // First attempt
+    let response = await makeRequest();
+
+    // Quick retry once on model overload
+    if (!response.ok && response.status === 503) {
+      await new Promise((r) => setTimeout(r, 1000));
+      response = await makeRequest();
+    }
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error("AI gateway error:", response.status, errorText);
-      
+
       if (response.status === 429) {
         return new Response(
           JSON.stringify({ error: "Rate limit exceeded. Please try again in a moment." }),
           { status: 429, headers: { ...corsHeaders, "Content-Type": "application/json" } }
         );
       }
-      
+
       if (response.status === 402) {
         return new Response(
           JSON.stringify({ error: "Payment required. Please add credits to your Lovable AI workspace." }),
@@ -117,19 +134,24 @@ serve(async (req) => {
         );
       }
 
+      if (response.status === 503) {
+        return new Response(
+          JSON.stringify({ error: "The model is overloaded. Please try again later." }),
+          { status: 503, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+
       throw new Error(`AI gateway error: ${errorText}`);
     }
 
     const data = await response.json();
-    
-    // Extract image from Gemini response
-    const imageData = data.candidates?.[0]?.content?.parts?.find((part: any) => part.inlineData)?.inlineData?.data;
-    
-    if (!imageData) {
-      throw new Error("No image returned from Gemini API");
-    }
 
-    const editedImageUrl = `data:image/png;base64,${imageData}`;
+    // Extract generated image from Lovable AI Gateway response
+    const editedImageUrl: string | undefined = data?.choices?.[0]?.message?.images?.[0]?.image_url?.url;
+
+    if (!editedImageUrl) {
+      throw new Error("No image returned from AI gateway");
+    }
 
     return new Response(
       JSON.stringify({ editedImageUrl }),

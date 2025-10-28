@@ -38,6 +38,9 @@ const AdminPanel: React.FC = () => {
   const [userImages, setUserImages] = useState<UserImage[]>([]);
   const [selectedTab, setSelectedTab] = useState<'users' | 'images' | 'analytics'>('users');
   const [creditAmount, setCreditAmount] = useState<{ [key: string]: number }>({});
+  const [searchEmail, setSearchEmail] = useState('');
+  const [searchedProfile, setSearchedProfile] = useState<Profile | null>(null);
+  const [addCreditAmount, setAddCreditAmount] = useState<number>(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -155,6 +158,57 @@ const AdminPanel: React.FC = () => {
     }
   };
 
+  const searchUserByEmail = async () => {
+    if (!searchEmail.trim()) {
+      alert('Please enter an email address');
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('email', searchEmail.trim())
+        .single();
+
+      if (error || !data) {
+        alert('User not found');
+        setSearchedProfile(null);
+      } else {
+        setSearchedProfile(data);
+      }
+    } catch (error) {
+      console.error('Error searching user:', error);
+      alert('Error searching user');
+    }
+  };
+
+  const addCreditsToSearchedUser = async () => {
+    if (!searchedProfile || !addCreditAmount || addCreditAmount <= 0) {
+      alert('Please enter a valid credit amount');
+      return;
+    }
+
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ credits: searchedProfile.credits + addCreditAmount })
+        .eq('id', searchedProfile.id);
+
+      if (error) {
+        alert('Error adding credits: ' + error.message);
+      } else {
+        alert(`Successfully added ${addCreditAmount} credits to ${searchedProfile.email}!`);
+        setSearchedProfile({ ...searchedProfile, credits: searchedProfile.credits + addCreditAmount });
+        setAddCreditAmount(0);
+        loadAdminData();
+      }
+    } catch (error) {
+      console.error('Error adding credits:', error);
+      alert('Error adding credits');
+    }
+  };
+
   const getUserRole = (userId: string) => {
     const role = userRoles.find(r => r.user_id === userId);
     return role?.role || 'user';
@@ -222,11 +276,79 @@ const AdminPanel: React.FC = () => {
 
           {/* Users Tab */}
           {selectedTab === 'users' && (
-            <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
-              <h2 className="text-2xl font-bold text-white mb-6 font-['Playfair_Display']">
-                User Management
-              </h2>
-              <div className="overflow-x-auto">
+            <div className="space-y-6">
+              {/* Search User by Email Section */}
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+                <h2 className="text-2xl font-bold text-white mb-4 font-['Playfair_Display']">
+                  Add Credits by Email
+                </h2>
+                <div className="flex gap-3 mb-4">
+                  <input
+                    type="email"
+                    placeholder="Enter user email"
+                    value={searchEmail}
+                    onChange={(e) => setSearchEmail(e.target.value)}
+                    className="flex-1 px-4 py-2 bg-gray-800 border border-gray-700 rounded text-white font-['Poppins'] focus:outline-none focus:border-[#ea580c]"
+                  />
+                  <button
+                    onClick={searchUserByEmail}
+                    className="px-6 py-2 bg-[#ea580c] hover:bg-[#c2410c] text-white rounded font-['Poppins'] font-semibold transition-colors"
+                  >
+                    Search
+                  </button>
+                </div>
+
+                {searchedProfile && (
+                  <div className="bg-gray-800 rounded-lg p-4 border border-gray-700">
+                    <div className="grid grid-cols-2 gap-4 mb-4">
+                      <div>
+                        <p className="text-gray-400 text-sm font-['Poppins']">Email</p>
+                        <p className="text-white font-['Poppins']">{searchedProfile.email}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-400 text-sm font-['Poppins']">Current Credits</p>
+                        <p className="text-white font-['Poppins'] font-semibold">{searchedProfile.credits}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-400 text-sm font-['Poppins']">Name</p>
+                        <p className="text-white font-['Poppins']">{searchedProfile.full_name || '-'}</p>
+                      </div>
+                      <div>
+                        <p className="text-gray-400 text-sm font-['Poppins']">Role</p>
+                        <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                          getUserRole(searchedProfile.id) === 'admin'
+                            ? 'bg-red-900/30 text-red-400'
+                            : 'bg-gray-700 text-gray-300'
+                        }`}>
+                          {getUserRole(searchedProfile.id)}
+                        </span>
+                      </div>
+                    </div>
+                    <div className="flex gap-3">
+                      <input
+                        type="number"
+                        placeholder="Credits to add"
+                        value={addCreditAmount || ''}
+                        onChange={(e) => setAddCreditAmount(parseInt(e.target.value) || 0)}
+                        className="flex-1 px-4 py-2 bg-gray-700 border border-gray-600 rounded text-white font-['Poppins'] focus:outline-none focus:border-[#ea580c]"
+                      />
+                      <button
+                        onClick={addCreditsToSearchedUser}
+                        className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded font-['Poppins'] font-semibold transition-colors"
+                      >
+                        Add Credits
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* All Users Table */}
+              <div className="bg-gray-900 rounded-xl p-6 border border-gray-800">
+                <h2 className="text-2xl font-bold text-white mb-6 font-['Playfair_Display']">
+                  User Management
+                </h2>
+                <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-800">
@@ -288,6 +410,7 @@ const AdminPanel: React.FC = () => {
                   </tbody>
                 </table>
               </div>
+            </div>
             </div>
           )}
 

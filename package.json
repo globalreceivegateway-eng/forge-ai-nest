@@ -8,6 +8,11 @@
     "build": "vite build",
     "preview": "vite preview"
   },
+  "scripts": {
+  "dev": "vite",
+  "build": "tsc && vite build",
+  "preview": "vite preview"
+},
   "dependencies": {
     "@google/genai": "^1.25.0",
     "@supabase/supabase-js": "^2.76.1",

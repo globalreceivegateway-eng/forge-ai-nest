@@ -76,8 +76,8 @@ serve(async (req) => {
     const body = await req.json();
     console.log('📦 Raw payload:', JSON.stringify(body, null, 2));
 
-    // Extract webhook data (Whop sends: action, data)
-    const { action: eventType, data } = body;
+    // Extract webhook data (Whop sends: type, data)
+    const { type: eventType, data } = body;
     
     console.log('🎯 Event type:', eventType);
     console.log('📄 Event data:', JSON.stringify(data, null, 2));

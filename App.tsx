@@ -49,6 +49,34 @@ const App: React.FC = () => {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Real-time updates for credits when profile changes
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel('profile-credits-updates')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'profiles',
+          filter: `id=eq.${user.id}`
+        },
+        (payload) => {
+          console.log('🔄 Real-time credits update:', payload);
+          if (payload.new && 'credits' in payload.new) {
+            setCredits((payload.new as any).credits);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
+
   const fetchCredits = async (userId: string) => {
     const { data, error } = await supabase
       .from('profiles')

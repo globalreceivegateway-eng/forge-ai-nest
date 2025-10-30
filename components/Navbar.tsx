@@ -11,6 +11,7 @@ interface ProfileData {
   credits: number;
   avatar_url: string | null;
   full_name: string | null;
+  plan: string | null;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
@@ -38,10 +39,35 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Real-time updates for profile changes (credits & plan)
+  useEffect(() => {
+    if (!user) return;
+
+    const channel = supabase
+      .channel('profile-changes')
+      .on(
+        'postgres_changes',
+        {
+          event: 'UPDATE',
+          schema: 'public',
+          table: 'profiles',
+          filter: `id=eq.${user.id}`
+        },
+        (payload) => {
+          setProfile(payload.new as ProfileData);
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [user]);
+
   const fetchProfile = async (userId: string) => {
     const { data, error } = await supabase
       .from('profiles')
-      .select('credits, avatar_url, full_name')
+      .select('credits, avatar_url, full_name, plan')
       .eq('id', userId)
       .single();
     
@@ -101,6 +127,11 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
                   onClick={() => setShowDropdown(!showDropdown)}
                   className="flex items-center gap-3 bg-gradient-to-r from-[#ea580c]/20 to-[#f97316]/20 border border-[#ea580c]/50 text-white px-4 py-2 rounded-lg hover:from-[#ea580c]/30 hover:to-[#f97316]/30 transition-all duration-300 font-['Poppins'] font-semibold"
                 >
+                  {profile?.plan && (
+                    <span className="bg-gradient-to-r from-[#ea580c] to-[#f97316] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                      {profile.plan}
+                    </span>
+                  )}
                   <div className="w-8 h-8 rounded-full bg-gradient-to-r from-[#ea580c] to-[#f97316] flex items-center justify-center overflow-hidden">
                     {profile?.avatar_url ? (
                       <img src={profile.avatar_url} alt="Profile" className="w-full h-full object-cover" />

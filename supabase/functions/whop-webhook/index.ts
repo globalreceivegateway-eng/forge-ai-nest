@@ -177,10 +177,111 @@ serve(async (req) => {
       );
     }
 
-    // Handle other Whop events (for logging)
+    // Handle membership.activated by resolving email via Whop API and updating credits
     if (eventType === 'membership.activated') {
       console.log('🎉 Membership activated:', data);
-    } else if (eventType === 'membership.deactivated') {
+
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
+      const supabaseServiceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
+      const supabase = createClient(supabaseUrl, supabaseServiceKey);
+
+      let userEmail: string | undefined = data?.user?.email;
+      const memberId: string | undefined = data?.member?.id;
+      const userId: string | undefined = data?.user?.id;
+
+      // Try to resolve email from Whop API if missing
+      if (!userEmail) {
+        const WHOP_API_KEY = Deno.env.get('WHOP_API_KEY');
+        try {
+          if (WHOP_API_KEY && (memberId || userId)) {
+            // Prefer member endpoint as it includes user object with email per docs
+            const url = memberId
+              ? `https://api.whop.com/v1/members/${memberId}`
+              : `https://api.whop.com/v1/users/${userId}`;
+            const resp = await fetch(url, {
+              headers: {
+                'Authorization': `Bearer ${WHOP_API_KEY}`,
+                'Accept': 'application/json'
+              }
+            });
+            if (resp.ok) {
+              const info = await resp.json();
+              userEmail = info?.user?.email || info?.email;
+              console.log('📧 Resolved email from Whop API:', userEmail);
+            } else {
+              const t = await resp.text();
+              console.warn('⚠️ Whop API lookup failed:', resp.status, t);
+            }
+          } else {
+            console.warn('ℹ️ WHOP_API_KEY missing or no identifiers to resolve email.');
+          }
+        } catch (e) {
+          console.error('❌ Error fetching email from Whop API:', e);
+        }
+      }
+
+      const planName = data?.product?.title || data?.plan?.name || data?.plan_name;
+      console.log('📋 Plan name:', planName);
+
+      if (!userEmail) {
+        console.log('⚠️ No email available. Skipping credit update.');
+        return new Response(
+          JSON.stringify({ success: true, message: 'membership.activated received but no email resolved' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+        );
+      }
+
+      // Find user by email in profiles
+      const { data: profile, error: profileError } = await supabase
+        .from('profiles')
+        .select('id, email, credits')
+        .eq('email', userEmail)
+        .single();
+
+      if (profileError || !profile) {
+        console.warn('⚠️ User not found for email on membership.activated:', userEmail);
+        return new Response(
+          JSON.stringify({ success: true, message: 'User not found for email' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+        );
+      }
+
+      // Determine credits
+      let creditsToAdd = 0;
+      for (const [plan, credits] of Object.entries(PLAN_CREDITS)) {
+        if (planName?.includes(plan)) {
+          creditsToAdd = credits as number;
+          break;
+        }
+      }
+      if (creditsToAdd === 0) {
+        console.log('ℹ️ No credit mapping for plan on membership.activated:', planName);
+      }
+
+      const currentCredits = profile.credits || 0;
+      const newCredits = currentCredits + creditsToAdd;
+      const { error: updateError } = await supabase
+        .from('profiles')
+        .update({ credits: newCredits, plan: planName })
+        .eq('id', profile.id);
+
+      if (updateError) {
+        console.error('❌ Failed to update profile on membership.activated:', updateError);
+        return new Response(
+          JSON.stringify({ success: false, error: 'Failed to update profile' }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+        );
+      }
+
+      console.log('✅ Updated profile from membership.activated:', { email: userEmail, credits_added: creditsToAdd, new_balance: newCredits });
+      return new Response(
+        JSON.stringify({ success: true, message: 'Profile updated from membership.activated', credits_added: creditsToAdd, new_balance: newCredits }),
+        { headers: { ...corsHeaders, 'Content-Type': 'application/json' }, status: 200 }
+      );
+    }
+
+    // Handle other Whop events (for logging)
+    if (eventType === 'membership.deactivated') {
       console.log('🚫 Membership deactivated:', data);
     } else if (eventType === 'payment.failed') {
       console.log('❌ Payment failed:', data);

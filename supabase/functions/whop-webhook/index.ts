@@ -76,8 +76,8 @@ serve(async (req) => {
     const body = await req.json();
     console.log('📦 Raw payload:', JSON.stringify(body, null, 2));
 
-    // Extract webhook data (Whop sends: type, data)
-    const { type: eventType, data } = body;
+    // Extract webhook data (Whop sends: action, data)
+    const { action: eventType, data } = body;
     
     console.log('🎯 Event type:', eventType);
     console.log('📄 Event data:', JSON.stringify(data, null, 2));
@@ -143,13 +143,16 @@ serve(async (req) => {
         );
       }
 
-      // Add credits to user account (not replace)
+      // Add credits to user account and save plan name
       const currentCredits = profile.credits || 0;
       const newCredits = currentCredits + creditsToAdd;
       
       const { error: updateError } = await supabase
         .from('profiles')
-        .update({ credits: newCredits })
+        .update({ 
+          credits: newCredits,
+          plan: planName 
+        })
         .eq('id', profile.id);
 
       if (updateError) {

@@ -5,28 +5,28 @@ import logo from '../src/assets/logo.png';
 const Footer: React.FC = () => {
   return (
     <footer className="bg-black border-t border-gray-800 mt-auto">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6 sm:gap-8">
           {/* Brand Section */}
-          <div className="md:col-span-1">
+          <div className="sm:col-span-2 lg:col-span-1">
             <div className="flex items-center gap-2 mb-4">
               <img src={logo} alt="SparkFrameAI" className="h-8 w-auto" />
             </div>
-            <p className="text-gray-400 text-sm mb-4">
+            <p className="text-gray-400 text-sm mb-4 max-w-xs">
               Transform your images with AI-powered photo editing. Professional results in seconds.
             </p>
             <div className="flex items-center gap-2 text-pink-500 mb-4">
               <Mail className="w-4 h-4" />
-              <span className="text-sm">support@sparkframe.ai</span>
+              <span className="text-sm break-all">support@sparkframe.ai</span>
             </div>
             <div className="flex gap-4">
-              <a href="#" className="text-gray-400 hover:text-pink-500 transition-colors">
+              <a href="#" className="text-gray-400 hover:text-pink-500 transition-colors" aria-label="Facebook">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-pink-500 transition-colors">
+              <a href="#" className="text-gray-400 hover:text-pink-500 transition-colors" aria-label="Instagram">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a href="#" className="text-gray-400 hover:text-pink-500 transition-colors">
+              <a href="#" className="text-gray-400 hover:text-pink-500 transition-colors" aria-label="Youtube">
                 <Youtube className="w-5 h-5" />
               </a>
             </div>
@@ -82,11 +82,11 @@ const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-sm text-gray-400">
+        <div className="border-t border-gray-800 mt-8 sm:mt-12 pt-6 sm:pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-sm text-gray-400 text-center sm:text-left">
             &copy; {new Date().getFullYear()} SparkFrameAI Studio. All rights reserved.
           </p>
-          <div className="flex gap-6 mt-4 md:mt-0">
+          <div className="flex gap-4 sm:gap-6">
             <a href="#" className="text-gray-400 hover:text-pink-500 transition-colors text-sm">Privacy</a>
             <a href="#" className="text-gray-400 hover:text-pink-500 transition-colors text-sm">Terms</a>
             <a href="#" className="text-gray-400 hover:text-pink-500 transition-colors text-sm">Cookies</a>

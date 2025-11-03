@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Sidebar from './components/Sidebar';
 import ImageWorkspace from './components/ImageWorkspace';
 import Footer from './components/Footer';
 import HomePage from './components/HomePage';
@@ -23,7 +22,6 @@ const App: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [statusText, setStatusText] = useState<string>('Upload an image to get started.');
   const [isWorkspace, setIsWorkspace] = useState(false);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   // Check authentication and fetch credits
@@ -175,7 +173,6 @@ const App: React.FC = () => {
     setStatusText('Upload an image to get started.');
     setSelectedStyle(STYLE_OPTIONS[0].id);
     setCustomPrompt('');
-    if (isSidebarOpen) setIsSidebarOpen(false);
   };
   
   const handleDownload = () => {
@@ -236,46 +233,37 @@ const App: React.FC = () => {
         </div>
       )}
 
-      <div className="flex flex-1 overflow-hidden">
-        <Sidebar
+      <main className="flex-1 p-4 md:p-6 bg-gray-900 overflow-auto">
+        {/* Credits Display */}
+        {user && (
+          <div className="mb-4 flex justify-end">
+            <div className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2">
+              <span className="text-gray-400 text-sm">Credits: </span>
+              <span className={`font-bold text-lg ${credits < 5 ? 'text-red-500' : 'text-orange-500'}`}>
+                {credits}
+              </span>
+              <span className="text-gray-500 text-xs ml-2">({Math.floor(credits / 5)} images left)</span>
+            </div>
+          </div>
+        )}
+        
+        <ImageWorkspace
+          onImageUpload={handleImageUpload}
+          imageUrl={editedImageUrl}
+          isLoading={isLoading}
+          error={error}
+          statusText={statusText}
+          isImageLoaded={!!originalImageUrl}
           selectedStyle={selectedStyle}
           onStyleChange={handleStyleChange}
           onEnhance={handleEnhance}
           onReset={handleReset}
           onDownload={handleDownload}
-          isImageUploaded={!!originalImageFile}
-          isLoading={isLoading}
           customPrompt={customPrompt}
           onCustomPromptChange={handleCustomPromptChange}
           isEnhanceDisabled={isEnhanceDisabled}
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
         />
-        <main className="flex-1 p-4 md:p-6 bg-gray-900 overflow-auto">
-          {/* Credits Display */}
-          {user && (
-            <div className="mb-4 flex justify-end">
-              <div className="bg-gray-800 border border-gray-700 rounded-lg px-4 py-2">
-                <span className="text-gray-400 text-sm">Credits: </span>
-                <span className={`font-bold text-lg ${credits < 5 ? 'text-red-500' : 'text-orange-500'}`}>
-                  {credits}
-                </span>
-                <span className="text-gray-500 text-xs ml-2">({Math.floor(credits / 5)} images left)</span>
-              </div>
-            </div>
-          )}
-          
-          <ImageWorkspace
-            onImageUpload={handleImageUpload}
-            imageUrl={editedImageUrl}
-            isLoading={isLoading}
-            error={error}
-            statusText={statusText}
-            isImageLoaded={!!originalImageUrl}
-            onOpenSidebar={() => setIsSidebarOpen(true)}
-          />
-        </main>
-      </div>
+      </main>
       <Footer />
     </div>
   );

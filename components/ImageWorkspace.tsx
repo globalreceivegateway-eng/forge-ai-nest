@@ -1,6 +1,9 @@
 import React, { useRef, ChangeEvent } from 'react';
+import { STYLE_OPTIONS } from '../constants';
 import UploadIcon from './icons/UploadIcon';
-import AdjustmentsIcon from './icons/AdjustmentsIcon';
+import MagicWandIcon from './icons/MagicWandIcon';
+import TrashIcon from './icons/TrashIcon';
+import DownloadIcon from './icons/DownloadIcon';
 
 interface ImageWorkspaceProps {
   onImageUpload: (file: File) => void;
@@ -9,7 +12,14 @@ interface ImageWorkspaceProps {
   error: string | null;
   statusText: string;
   isImageLoaded: boolean;
-  onOpenSidebar: () => void;
+  selectedStyle: string;
+  onStyleChange: (style: string) => void;
+  onEnhance: () => void;
+  onReset: () => void;
+  onDownload: () => void;
+  customPrompt: string;
+  onCustomPromptChange: (prompt: string) => void;
+  isEnhanceDisabled: boolean;
 }
 
 const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
@@ -19,7 +29,14 @@ const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
   error,
   statusText,
   isImageLoaded,
-  onOpenSidebar,
+  selectedStyle,
+  onStyleChange,
+  onEnhance,
+  onReset,
+  onDownload,
+  customPrompt,
+  onCustomPromptChange,
+  isEnhanceDisabled,
 }) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -80,14 +97,68 @@ const ImageWorkspace: React.FC<ImageWorkspaceProps> = ({
       </div>
 
       {isImageLoaded && (
-         <div className="w-full max-w-4xl mt-4 lg:hidden">
+        <div className="w-full max-w-4xl mt-6 space-y-6">
+          {/* Style Options */}
+          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+            <h2 className="text-xl font-bold text-white mb-4">Choose Style</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              {STYLE_OPTIONS.map((option) => (
+                <button
+                  key={option.id}
+                  onClick={() => onStyleChange(option.id)}
+                  className={`text-left p-3 rounded-lg transition-colors text-sm font-medium ${
+                    selectedStyle === option.id
+                      ? 'bg-orange-600 text-white'
+                      : 'bg-gray-700 hover:bg-gray-600 text-gray-300'
+                  }`}
+                >
+                  {option.name}
+                </button>
+              ))}
+            </div>
+
+            {selectedStyle === 'custom' && (
+              <div className="mt-6">
+                <h3 className="text-lg font-semibold text-white mb-3">Custom Styling</h3>
+                <textarea
+                  value={customPrompt}
+                  onChange={(e) => onCustomPromptChange(e.target.value)}
+                  placeholder="e.g., Make the background black and white..."
+                  rows={4}
+                  className="w-full p-3 rounded-lg bg-gray-700 text-gray-200 text-sm placeholder-gray-400 focus:outline-none transition-all duration-200 ring-2 ring-orange-500 border-none"
+                  aria-label="Custom styling prompt"
+                />
+              </div>
+            )}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             <button
-                onClick={onOpenSidebar}
-                className="w-full bg-orange-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-orange-500 transition-colors"
+              onClick={onEnhance}
+              disabled={isEnhanceDisabled}
+              className="bg-orange-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-orange-500 transition-colors disabled:bg-orange-900/50 disabled:text-gray-400 disabled:cursor-not-allowed"
             >
-                <AdjustmentsIcon className="w-5 h-5" />
-                <span>Edit Styles</span>
+              <MagicWandIcon className="w-5 h-5" />
+              <span>{isLoading ? 'Enhancing...' : 'Enhance'}</span>
             </button>
+            <button
+              onClick={onDownload}
+              disabled={!isImageLoaded}
+              className="bg-gray-600 text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 hover:bg-gray-500 transition-colors disabled:bg-gray-700/50 disabled:text-gray-400 disabled:cursor-not-allowed"
+            >
+              <DownloadIcon className="w-5 h-5" />
+              <span>Download</span>
+            </button>
+            <button
+              onClick={onReset}
+              disabled={!isImageLoaded}
+              className="text-gray-400 font-semibold py-3 px-4 rounded-lg flex items-center justify-center space-x-2 hover:text-white transition-colors disabled:text-gray-600 disabled:cursor-not-allowed border border-gray-600"
+            >
+              <TrashIcon className="w-5 h-5" />
+              <span>Reset</span>
+            </button>
+          </div>
         </div>
       )}
     </div>
